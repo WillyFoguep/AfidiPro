@@ -1,0 +1,51 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.0.0'
+        classpath 'com.google.gms:google-services:4.4.4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    
+    // Patch automatique pour Capacitor ProGuard
+    gradle.projectsEvaluated {
+        tasks.all { task ->
+            if (task.name == 'preBuild') {
+                task.doFirst {
+                    def capacitorBuildFile = file("${rootProject.projectDir}/node_modules/@capacitor/android/capacitor/build.gradle")
+                    if (capacitorBuildFile.exists()) {
+                        def content = capacitorBuildFile.text
+                        if (content.contains("proguard-android.txt")) {
+                            content = content.replace(
+                                "getDefaultProguardFile('proguard-android.txt')",
+                                "getDefaultProguardFile('proguard-android-optimize.txt')"
+                            )
+                            capacitorBuildFile.text = content
+                            println "✓ Fixed ProGuard in Capacitor build.gradle"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

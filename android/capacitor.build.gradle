@@ -1,0 +1,14 @@
+// Patch pour corriger les dépendances Capacitor
+afterEvaluate {
+    // Correction du fichier capacitor/build.gradle de node_modules
+    def capacitorBuildGradle = file("${rootProject.projectDir}/node_modules/@capacitor/android/capacitor/build.gradle")
+    if (capacitorBuildGradle.exists()) {
+        String content = capacitorBuildGradle.text
+        content = content.replace(
+            "getDefaultProguardFile('proguard-android.txt')",
+            "getDefaultProguardFile('proguard-android-optimize.txt')"
+        )
+        capacitorBuildGradle.text = content
+        println "✓ Fixed ProGuard configuration in Capacitor"
+    }
+}

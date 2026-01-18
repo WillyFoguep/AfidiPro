@@ -1,0 +1,20 @@
+{
+  "appId": "com.afidipro.app",
+  "appName": "AfidiPro",
+  "server": {
+    "url": "https://votre-domaine.com",
+    "cleartext": false,
+    "allowNavigation": ["*"]
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 2000
+    },
+    "CapacitorHTTP": {
+      "enabled": true
+    }
+  },
+  "webDir": "www",
+  "backgroundColor": "#ffffff"
+}
