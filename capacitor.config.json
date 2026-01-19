@@ -2,7 +2,7 @@
   "appId": "com.afidipro.app",
   "appName": "AfidiPro",
   "server": {
-    "url": "https://votre-domaine.com",
+    "url": "https://www.afidipro.com",
     "cleartext": false,
     "allowNavigation": ["*"]
   },
