@@ -22,30 +22,40 @@ allprojects {
         google()
         mavenCentral()
     }
-    
-    // Patch automatique pour Capacitor ProGuard
-    gradle.projectsEvaluated {
-        tasks.all { task ->
-            if (task.name == 'preBuild') {
-                task.doFirst {
-                    def capacitorBuildFile = file("${rootProject.projectDir}/node_modules/@capacitor/android/capacitor/build.gradle")
-                    if (capacitorBuildFile.exists()) {
-                        def content = capacitorBuildFile.text
-                        if (content.contains("proguard-android.txt")) {
-                            content = content.replace(
-                                "getDefaultProguardFile('proguard-android.txt')",
-                                "getDefaultProguardFile('proguard-android-optimize.txt')"
-                            )
-                            capacitorBuildFile.text = content
-                            println "✓ Fixed ProGuard in Capacitor build.gradle"
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// Patch to fix Capacitor ProGuard issue
+def fixCapacitorProguard() {
+    def capacitorDir = new File(rootProject.projectDir, "../node_modules/@capacitor")
+    if (!capacitorDir.exists() || !capacitorDir.isDirectory()) {
+        return
+    }
+    
+    capacitorDir.eachDir { moduleDir ->
+        // Standard path for most plugins
+        def buildFile = new File(moduleDir, "android/build.gradle")
+        if (buildFile.exists()) {
+            fixFile(buildFile, moduleDir.name)
+        }
+        // Special path for @capacitor/android plugin
+        def legacyBuildFile = new File(moduleDir, "capacitor/build.gradle")
+        if (legacyBuildFile.exists()) {
+            fixFile(legacyBuildFile, moduleDir.name + "/capacitor")
+        }
+    }
+}
+
+def fixFile(File file, String name) {
+    def content = file.getText('UTF-8')
+    if (content.contains("proguard-android.txt")) {
+        def newContent = content.replace("getDefaultProguardFile('proguard-android.txt')", "getDefaultProguardFile('proguard-android-optimize.txt')")
+        file.write(newContent, 'UTF-8')
+        println "✓ Fixed ProGuard in @capacitor/" + name
+    }
+}
+
+fixCapacitorProguard()
