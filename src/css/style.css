@@ -1,7 +1,8 @@
-html,
 body {
-  padding: 0;
-  margin: 0;
-  padding-top: calc(env(safe-area-inset-top) + 20px);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding-top: env(safe-area-inset-top, 24px);
+}
+.header {
+  background-color: #0f172a; /* ta couleur */
+  padding-top: env(safe-area-inset-top, 24px);
+  height: calc(56px + env(safe-area-inset-top, 24px));
 }
