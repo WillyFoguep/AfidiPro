@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
 
     <!-- Base application theme. -->
@@ -12,14 +12,25 @@
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style
+    name="AppTheme.NoActionBar"
+    parent="Theme.AppCompat.DayNight.NoActionBar"
+  >
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+<<<<<<< HEAD
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowTranslucentStatus">false</item>
         <!-- Opt-out of Android 15 Edge-to-Edge enforcement -->
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+=======
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+
+         <item name="android:windowLightStatusBar">false</item>
+>>>>>>> aaf4712b830facf58e3f835936c64eedaa008ccf
     </style>
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
@@ -29,5 +40,9 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
+<<<<<<< HEAD
 
 </resources>
+=======
+</resources>
+>>>>>>> aaf4712b830facf58e3f835936c64eedaa008ccf

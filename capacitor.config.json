@@ -8,6 +8,10 @@
     "allowNavigation": ["*"]
   },
   "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false,
+      "style": "DARK"
+    },
     "SplashScreen": {
       "launchAutoHide": true,
       "launchShowDuration": 2000
