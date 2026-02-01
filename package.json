@@ -19,7 +19,9 @@
     "@capacitor/camera": "latest",
     "@capacitor/core": "^8.0.1",
     "@capacitor/ios": "^8.0.1",
-    "@capacitor/splash-screen": "latest"
+    "@capacitor/splash-screen": "latest",
+    "@capacitor/status-bar": "^8.0.0",
+    "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.3"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

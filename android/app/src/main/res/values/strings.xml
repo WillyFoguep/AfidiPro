@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">AfidiPro</string>
-    <string name="title_activity_main">AfidiPro</string>
+    <string name="app_name">Afidi</string>
+    <string name="title_activity_main">Afidi</string>
     <string name="package_name">com.afidipro.app</string>
     <string name="custom_url_scheme">com.afidipro.app</string>
 </resources>
