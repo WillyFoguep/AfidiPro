@@ -3,7 +3,7 @@
   "appName": "Afidi",
   "webDir": "dist",
   "server": {
-    "url": "https://www.afidipro.com/fr/about",
+    "url": "https://www.afidipro.com",
     "cleartext": false,
     "allowNavigation": ["*"]
   },
@@ -28,5 +28,5 @@
     "webContentsDebuggingEnabled": true,
     "userAgent": "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
     "adjustMarginsForEdgeToEdge": false
-  }
+  } 
 }
