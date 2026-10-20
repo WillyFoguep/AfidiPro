@@ -1,14 +1,18 @@
 package com.afidipro.app;
 
 import com.getcapacitor.BridgeActivity;
+import com.getcapacitor.BridgeWebViewClient;
 import com.getcapacitor.WebViewListener;
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import androidx.core.app.ActivityCompat;
@@ -36,6 +40,15 @@ public class MainActivity extends BridgeActivity {
         WebSettings settings = getBridge().getWebView().getSettings();
         settings.setUserAgentString(userAgent);
 
+        // Liens WhatsApp / Facebook : ouverts dans l'application correspondante
+        getBridge().setWebViewClient(new BridgeWebViewClient(getBridge()) {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (openInNativeApp(request.getUrl())) return true;
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+
         createNotificationChannel();
         requestNotificationPermission();
         readLinkFromIntent(getIntent());
@@ -61,6 +74,50 @@ public class MainActivity extends BridgeActivity {
         readLinkFromIntent(intent);
         if (pageLoaded) {
             openPendingLink(getBridge().getWebView());
+        }
+    }
+
+    // Applications à essayer en premier pour chaque domaine (WhatsApp, puis WhatsApp Business).
+    private static final String[] WHATSAPP_PACKAGES = { "com.whatsapp", "com.whatsapp.w4b" };
+    private static final String[] FACEBOOK_PACKAGES = { "com.facebook.katana", "com.facebook.orca" };
+
+    private static boolean hostMatches(String host, String domain) {
+        return host.equals(domain) || host.endsWith("." + domain);
+    }
+
+    // Renvoie true si le lien a été confié à une autre application.
+    // Sans l'application installée, le lien s'ouvre dans le navigateur du téléphone.
+    private boolean openInNativeApp(Uri uri) {
+        String scheme = uri.getScheme();
+        String host = uri.getHost();
+        if (scheme == null || host == null) return false;
+        if (!scheme.equals("https") && !scheme.equals("http")) return false;
+        host = host.toLowerCase();
+
+        String[] packages;
+        if (host.equals("wa.me") || hostMatches(host, "whatsapp.com")) {
+            packages = WHATSAPP_PACKAGES;
+        } else if (hostMatches(host, "facebook.com") || host.equals("fb.me")
+                || host.equals("fb.com") || host.equals("m.me")) {
+            packages = FACEBOOK_PACKAGES;
+        } else {
+            return false;
+        }
+
+        for (String pkg : packages) {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri).setPackage(pkg);
+                startActivity(intent);
+                return true;
+            } catch (ActivityNotFoundException ignored) {
+                // application absente : on essaie la suivante
+            }
+        }
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            return true;
+        } catch (ActivityNotFoundException e) {
+            return false;
         }
     }
 
