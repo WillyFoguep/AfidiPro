@@ -19,6 +19,8 @@
     "@capacitor/camera": "latest",
     "@capacitor/core": "^8.0.1",
     "@capacitor/ios": "^8.0.1",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/push-notifications": "^8.0.3",
     "@capacitor/splash-screen": "latest",
     "@capacitor/status-bar": "^8.0.0"
   },

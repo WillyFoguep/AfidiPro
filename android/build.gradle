@@ -7,8 +7,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:9.0.0'
-        classpath 'com.google.gms:google-services:4.4.4'
+        classpath 'com.android.tools.build:gradle:8.7.2'
+        classpath 'com.google.gms:google-services:4.4.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,6 +21,12 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.browser:browser:1.8.0'
+        }
     }
 }
 
@@ -51,10 +57,20 @@ def fixCapacitorProguard() {
 
 def fixFile(File file, String name) {
     def content = file.getText('UTF-8')
+    def updated = content
+
     if (content.contains("proguard-android.txt")) {
-        def newContent = content.replace("getDefaultProguardFile('proguard-android.txt')", "getDefaultProguardFile('proguard-android-optimize.txt')")
-        file.write(newContent, 'UTF-8')
+        updated = updated.replace("getDefaultProguardFile('proguard-android.txt')", "getDefaultProguardFile('proguard-android-optimize.txt')")
         println "✓ Fixed ProGuard in @capacitor/" + name
+    }
+
+    if (content.contains("JavaVersion.VERSION_21")) {
+        updated = updated.replace("JavaVersion.VERSION_21", "JavaVersion.VERSION_17")
+        println "✓ Forced Java 17 in @capacitor/" + name
+    }
+
+    if (updated != content) {
+        file.write(updated, 'UTF-8')
     }
 }
 

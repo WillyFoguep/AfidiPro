@@ -7,6 +7,10 @@
     "allowNavigation": ["*"]
   },
   "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"],
+      "senderId": "181095583407"
+    },
     "StatusBar": {
       "overlaysWebView": false,
       "style": "DARK"
@@ -22,6 +26,7 @@
   "webDir": "www",
   "android": {
     "webContentsDebuggingEnabled": false,
-    "userAgent": "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+    "userAgent": "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    "appendUserAgent": "AfidiApp"
   }
 }
