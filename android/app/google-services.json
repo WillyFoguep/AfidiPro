@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "181095583407",
+    "project_id": "afidipro-5a87d",
+    "storage_bucket": "afidipro-5a87d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181095583407:android:d7dcc0cd9cb2af7b94ce5a",
+        "android_client_info": {
+          "package_name": "com.afidipro.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgHVPA2tCKGeRI5KsPD7srTjRiP4yhjss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
