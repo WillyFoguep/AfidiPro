@@ -5,3 +5,53 @@ node_modules/
 .DS_Store
 .sourcemaps
 dist/
+
+# --- Secrets et clés (ne jamais commiter) ---
+.env
+.env.*
+!.env.example
+*.keystore
+!debug.keystore
+*.jks
+keystore.properties
+*.pem
+*.p8
+*.p12
+*.mobileprovision
+*firebase-adminsdk*.json
+*service-account*.json
+*serviceAccount*.json
+
+# --- Builds Android / iOS ---
+*.apk
+*.aab
+*.aar
+android/.gradle/
+android/build/
+android/app/build/
+android/app/release/
+android/local.properties
+android/capacitor-cordova-android-plugins/
+ios/App/Pods/
+ios/DerivedData/
+ios/App/build/
+*.xcuserstate
+xcuserdata/
+
+# --- Fichiers générés par Capacitor ---
+android/app/src/main/assets/public/
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/app/src/main/res/xml/config.xml
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/capacitor-cordova-ios-plugins/
+
+# --- Divers ---
+*.log
+npm-debug.log*
+Thumbs.db
+desktop.ini
+.claude/settings.local.json
+*.iml
