@@ -47,5 +47,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>AfidiPro utilise la caméra pour prendre des photos à joindre à vos demandes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>AfidiPro accède à vos photos pour les joindre à vos demandes.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>AfidiPro peut enregistrer des photos dans votre bibliothèque.</string>
 </dict>
 </plist>
