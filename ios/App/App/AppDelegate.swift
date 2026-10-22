@@ -11,12 +11,16 @@ import FirebaseMessaging
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var firebaseConfigured = false
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if canImport(FirebaseMessaging)
         // Nécessite GoogleService-Info.plist dans la cible App (voir MOBILE_PUSH.md / guide iOS)
         if Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") != nil {
             FirebaseApp.configure()
+            firebaseConfigured = true
+        } else {
+            NSLog("[push] GoogleService-Info.plist introuvable : jeton APNs brut utilisé (inutilisable via FCM)")
         }
         #endif
 
@@ -61,17 +65,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         #if canImport(FirebaseMessaging)
         // Le serveur envoie via FCM : on transmet au plugin le jeton FCM, pas le jeton APNs brut.
-        Messaging.messaging().apnsToken = deviceToken
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
-            } else if let token = token {
-                NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+        if firebaseConfigured {
+            Messaging.messaging().apnsToken = deviceToken
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    NSLog("[push] jeton FCM impossible : \(error.localizedDescription)")
+                    NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+                } else if let token = token {
+                    NSLog("[push] jeton FCM obtenu (\(token.count) caractères)")
+                    NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+                }
             }
+            return
         }
-        #else
-        NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
         #endif
+        NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
